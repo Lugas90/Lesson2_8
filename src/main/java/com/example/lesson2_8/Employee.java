@@ -1,5 +1,7 @@
 package com.example.lesson2_8;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Employee {
@@ -11,8 +13,8 @@ public class Employee {
 
     public Employee (String firstName, String lastName, Integer passport,
                      Integer department, Double salary){
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = StringUtils.capitalize(firstName);
+        this.lastName = StringUtils.capitalize(lastName);
         this.passport = passport;
         this.department = department;
         this.salary = salary;
