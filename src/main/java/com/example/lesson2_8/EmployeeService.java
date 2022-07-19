@@ -1,8 +1,10 @@
 package com.example.lesson2_8;
 
+import com.example.lesson2_8.exceptions.ChecksAlphaException;
 import com.example.lesson2_8.exceptions.EmployeeAlreadyAddedException;
 import com.example.lesson2_8.exceptions.EmployeeNotFoundException;
 import com.example.lesson2_8.exceptions.EmployeeStorageIsFullException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ public class EmployeeService {
 
     public Employee addEmployee(String firstName, String lastName, Integer passport,
                                 Integer department, Double salary) {
+        checkAlpha(firstName, lastName);
         Employee emp = new Employee(firstName, lastName, passport, department, salary);
         if (emp1.containsKey(passport)) {
             throw new EmployeeAlreadyAddedException();
@@ -30,6 +33,7 @@ public class EmployeeService {
 
     public Employee deleteEmployee(String firstName, String lastName, Integer passport,
                                    Integer department, Double salary) {
+        checkAlpha(firstName, lastName);
         Employee emp = new Employee(firstName, lastName, passport, department, salary);
         if (!emp1.containsKey(emp.getPassport())) {
             throw new EmployeeNotFoundException();
@@ -40,6 +44,7 @@ public class EmployeeService {
 
     public Employee findEmployee(String firstName, String lastName, Integer passport,
                                  Integer department, Double salary) {
+        checkAlpha(firstName, lastName);
         Employee emp = new Employee(firstName, lastName,passport, department, salary);
         if (emp1 == null){
             throw new EmployeeNotFoundException();
@@ -48,6 +53,12 @@ public class EmployeeService {
     }
     public List <Employee> getAll (){
         return new ArrayList<>(emp1.values());
+    }
+
+    private void checkAlpha (String firstName, String lastName){
+        if (!(StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName))){
+            throw new ChecksAlphaException();
+        }
     }
 
     }
